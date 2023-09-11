@@ -70,7 +70,7 @@
                                 <!-- <HINT> For each question choice, you may create a checkbox input like -->
                                 <label class="form-check-label">
                                     <input type="checkbox" name="choice_{{choice.id}}"
-                                           class="form-check-input" id="{{choice.id}}"
+                                           class="form-check-input checkbox" id="{{choice.id}}"
                                            value="{{choice.id}}">{{ choice.choice_content }}
                                 </label>
                             </div>
@@ -78,7 +78,33 @@
                         </div>
                     </div>
                     {% endfor %}
-                <input class="btn btn-success btn-block" type="submit" value="Submit">
+                <input class="btn btn-success btn-block" type="submit" id ="submission" value="Submit">
+                <!-- This below Javascript aims to hide the button if checkboxes are not checked -->
+                <script>
+                
+                    var checkboxes = document.querySelectorAll('.checkbox');
+                    function anyCheckbox(){
+                        for (var i = 0; i < checkboxes.length; i++) {
+                            if (checkboxes[i].checked) {
+                                return true;
+                            }
+                        }
+                        return false;                        
+                    }
+                    
+                    function toggleSubmission(){
+                        if (anyCheckbox()){
+                        document.getElementById("submission").style.visibility = "visible";
+                        }else{
+                        document.getElementById("submission").style.visibility = "hidden";
+                        }
+                    }
+                    checkboxes.forEach(function (checkbox) {
+                        checkbox.addEventListener('change', toggleSubmission);
+                    });
+                    toggleSubmission();
+                </script> 
+                
             </form>
         </div>
         {% endif %}
